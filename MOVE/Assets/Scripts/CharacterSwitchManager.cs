@@ -1,62 +1,64 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CharacterSwitchManager : MonoBehaviour
 {
     [Header("Characters")]
-    public GameObject[] characters;       // Assign Brawler, Grappler, WeaponUser in Inspector
     public int activeIndex = 0;
 
     [Header("Shared State")]
-    public float health = 100f;
-    public int comboCount = 0;
+    public float health    = 100f;
+    public int   comboCount = 0;
 
-    private InputScheme _input;
+    // FIX: No InputScheme here — PlayerInputHandler owns all input
+    private IAttacker[] _attackers;
+    private IAttacker   _activeAttacker;
 
     void Awake()
     {
-        _input = new InputScheme();
-    }
-
-    void OnEnable()
-    {
-        _input.Player.SwitchCharacter.performed += ctx =>
-        {
-            
-            var key = ctx.control.name;
-            if      (key == "1" || key == "left") SwitchTo(0);
-            else if (key == "2" || key == "up") SwitchTo(1);
-            else if (key == "3" || key == "right") SwitchTo(2);
-        };
-        _input.Player.Enable();
-    }
-
-    void OnDisable()
-    {
-        _input.Player.Disable();
+        _attackers = GetComponentsInChildren<IAttacker>(includeInactive: true);
     }
 
     void Start()
     {
-        SwitchTo(0); // Activate first character on start
+        if (_attackers.Length == 0) return;
+ 
+        _activeAttacker = _attackers[0];
+        var go = (_activeAttacker as MonoBehaviour)?.gameObject;
+        go?.SetActive(true);
+        go?.GetComponent<CharacterBase>()?.OnActivated(this);
+ 
+        // Deactivate all others
+        for (int i = 1; i < _attackers.Length; i++)
+            (_attackers[i] as MonoBehaviour)?.gameObject.SetActive(false);
     }
 
     public void SwitchTo(int index)
     {
         if (index == activeIndex) return;
-        if (index < 0 || index >= characters.Length) return;
+        if (index < 0 || index >= _attackers.Length) return;
 
-        // Save outgoing character's local state if needed
-        var outgoing = characters[activeIndex].GetComponent<CharacterBase>();
-        outgoing?.OnDeactivated();
+        var outgoingGO     = (_activeAttacker as MonoBehaviour)?.gameObject;
+        var incomingGO     = (_attackers[index] as MonoBehaviour)?.gameObject;
+        var outgoingWindow = outgoingGO?.GetComponent<CounterWindow>();
+        var incomingWindow = incomingGO?.GetComponent<CounterWindow>();
 
-        // Swap active
-        characters[activeIndex].SetActive(false);
-        activeIndex = index;
-        characters[activeIndex].SetActive(true);
+        if (outgoingWindow != null && outgoingWindow.IsOpen && incomingWindow != null)
+        {
+            Transform pending = outgoingWindow.PendingAttacker;
+            outgoingWindow.ForceClose();
+            incomingWindow.Open(pending);
+        }
 
-        // Give incoming character the shared state
-        var incoming = characters[activeIndex].GetComponent<CharacterBase>();
-        incoming?.OnActivated(this);
+        outgoingGO?.GetComponent<CharacterBase>()?.OnDeactivated();
+        outgoingGO?.SetActive(false);
+
+        activeIndex     = index;
+        _activeAttacker = _attackers[index];
+        incomingGO?.SetActive(true);
+
+        incomingGO?.GetComponent<CharacterBase>()?.OnActivated(this);
     }
+
+    public GameObject GetActiveCharacter() =>
+        (_activeAttacker as MonoBehaviour)?.gameObject;
 }

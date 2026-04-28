@@ -1,20 +1,25 @@
 using UnityEngine;
 
-public abstract class CharacterBase : MonoBehaviour
+public abstract class CharacterBase : MonoBehaviour, IAttacker
 {
     protected CharacterSwitchManager manager;
 
     public virtual void OnActivated(CharacterSwitchManager mgr)
     {
         manager = mgr;
-        // Play switch-in animation, SFX, etc.
     }
 
     public virtual void OnDeactivated()
     {
-        // Interrupt any active attack, reset state
+        // Called when switching AWAY from this character
     }
 
-    public abstract void Attack();
-    public abstract void Counter();
+    // Called when the player takes a hit — separate from OnDeactivated
+    public virtual void OnStagger()
+    {
+        // Override in each character to play hurt reaction
+    }
+
+    public abstract void Attack(Transform target);
+    public abstract float AttackRange { get; }
 }

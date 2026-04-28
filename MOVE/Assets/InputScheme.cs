@@ -94,7 +94,7 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Walk"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""d2a070dd-1cda-47f8-8fba-27dfa0e39ca3"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -136,6 +136,24 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""09d4a444-6db7-41ea-abb2-c07c96cb867e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Finisher"",
+                    ""type"": ""Button"",
+                    ""id"": ""df3fc477-b848-408a-be31-edd83574b145"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -153,7 +171,7 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Up"",
                     ""id"": ""2e88bc7b-ecf0-449e-881d-e6b26a1e2832"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -164,7 +182,7 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Down"",
                     ""id"": ""aa4ef712-bf7c-4206-80fc-dc6a313d61cb"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -175,7 +193,7 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Left"",
                     ""id"": ""88e6f0d4-7d25-40c2-91c2-4ef6a0d47dbb"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -186,7 +204,7 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Right"",
                     ""id"": ""b6321305-b7a4-4aa6-88f0-18bb023a201e"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -317,6 +335,17 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b08e5389-d6d3-4c75-90ae-ca663904e6fa"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Counter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""64bf561b-f9ec-4538-b765-8c136e104473"",
                     ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
@@ -380,6 +409,50 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f11b4f7-0559-4301-9ce1-52c9e35815cb"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0441ec7-9e08-4473-8e39-c5e8328aad0c"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0b55138-3ee1-4828-9e60-0f4a632089c7"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Finisher"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e52bf417-fcdb-42d5-a522-fc11ef510d35"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Finisher"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -410,6 +483,8 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Counter = m_Player.FindAction("Counter", throwIfNotFound: true);
         m_Player_SwitchCharacter = m_Player.FindAction("SwitchCharacter", throwIfNotFound: true);
+        m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
+        m_Player_Finisher = m_Player.FindAction("Finisher", throwIfNotFound: true);
     }
 
     ~@InputScheme()
@@ -495,6 +570,8 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Counter;
     private readonly InputAction m_Player_SwitchCharacter;
+    private readonly InputAction m_Player_LockOn;
+    private readonly InputAction m_Player_Finisher;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -526,6 +603,14 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/SwitchCharacter".
         /// </summary>
         public InputAction @SwitchCharacter => m_Wrapper.m_Player_SwitchCharacter;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/LockOn".
+        /// </summary>
+        public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Finisher".
+        /// </summary>
+        public InputAction @Finisher => m_Wrapper.m_Player_Finisher;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -567,6 +652,12 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
             @SwitchCharacter.started += instance.OnSwitchCharacter;
             @SwitchCharacter.performed += instance.OnSwitchCharacter;
             @SwitchCharacter.canceled += instance.OnSwitchCharacter;
+            @LockOn.started += instance.OnLockOn;
+            @LockOn.performed += instance.OnLockOn;
+            @LockOn.canceled += instance.OnLockOn;
+            @Finisher.started += instance.OnFinisher;
+            @Finisher.performed += instance.OnFinisher;
+            @Finisher.canceled += instance.OnFinisher;
         }
 
         /// <summary>
@@ -593,6 +684,12 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
             @SwitchCharacter.started -= instance.OnSwitchCharacter;
             @SwitchCharacter.performed -= instance.OnSwitchCharacter;
             @SwitchCharacter.canceled -= instance.OnSwitchCharacter;
+            @LockOn.started -= instance.OnLockOn;
+            @LockOn.performed -= instance.OnLockOn;
+            @LockOn.canceled -= instance.OnLockOn;
+            @Finisher.started -= instance.OnFinisher;
+            @Finisher.performed -= instance.OnFinisher;
+            @Finisher.canceled -= instance.OnFinisher;
         }
 
         /// <summary>
@@ -681,5 +778,19 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSwitchCharacter(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LockOn" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLockOn(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Finisher" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFinisher(InputAction.CallbackContext context);
     }
 }
