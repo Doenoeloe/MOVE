@@ -7,7 +7,7 @@ public class PlayerCombatManager : MonoBehaviour
     private CounterWindow          _counter;
     private Animator               _anim;
     private CharacterSwitchManager _switcher;
-
+    private SharedCharacterState _sharedState;
     void Awake()
     {
         _targeting = GetComponent<TargetingSystem>();
@@ -15,6 +15,7 @@ public class PlayerCombatManager : MonoBehaviour
         _counter   = GetComponent<CounterWindow>();
         _anim      = GetComponent<Animator>();
         _switcher  = GetComponent<CharacterSwitchManager>();
+        _sharedState = GetComponent<SharedCharacterState>();
     }
 
     void OnEnable()
@@ -29,6 +30,11 @@ public class PlayerCombatManager : MonoBehaviour
             Debug.Log("[Combo] Reset");
         _combo.OnFinisherUnlocked += () =>
             Debug.Log("[Combo] FINISHER AVAILABLE");
+        
+        _sharedState.OnStaggerEnter += () => Debug.Log("[Player] Staggered — input blocked.");
+        _sharedState.OnStaggerExit  += () => Debug.Log("[Player] Stagger ended.");
+        _sharedState.OnDeath        += ()  => Debug.Log("[Player] Died.");
+        _sharedState.OnHealthChanged += hp => Debug.Log($"[Player] Health: {hp:F0}");
     }
 
     void OnDisable()
@@ -46,6 +52,11 @@ public class PlayerCombatManager : MonoBehaviour
 
     public void OnAttack()
     {
+        if (_sharedState.IsStaggered)
+        {
+            Debug.Log("[Attack] Blocked — player is staggered.");
+            return;
+        }
         Debug.Log("[Attack] OnAttack() called");
 
         var activeGO = _switcher?.GetActiveCharacter();
@@ -106,12 +117,17 @@ public class PlayerCombatManager : MonoBehaviour
         _combo.RegisterHit();
     }
 
+    // Called by CharacterBase.OnEnemyAttackLanded (default implementation).
+    // Grappler never calls this — it overrides OnEnemyAttackLanded directly.
+    // No concrete character type checks needed here.
     public void OnTakeHit()
     {
-        Debug.Log("[Player] OnTakeHit — combo reset, target cleared.");
         _combo.Reset();
         _targeting.ClearTarget();
-        
+
+        _sharedState.TakeDamage(10f);
+        _sharedState.EnterStagger();
+
         _switcher?.GetActiveCharacter()
                  ?.GetComponent<CharacterBase>()
                  ?.OnStagger();

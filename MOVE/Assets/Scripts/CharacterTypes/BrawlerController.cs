@@ -41,9 +41,9 @@ public class BrawlerController : CharacterBase, ICounterable, IFinisher
 
     // ── CharacterBase ──────────────────────────────────────────
 
-    public override void OnActivated(CharacterSwitchManager mgr)
+    public override void OnActivated(CharacterSwitchManager mgr, SharedCharacterState sct)
     {
-        base.OnActivated(mgr);
+        base.OnActivated(mgr,sct);
         _anim  = GetComponent<Animator>();
         _combo = GetComponentInParent<ComboTracker>();
 
@@ -216,10 +216,13 @@ public class BrawlerController : CharacterBase, ICounterable, IFinisher
     void FaceTarget(Transform t)
     {
         if (t == null) return;
-        Vector3 dir = (t.position - transform.position).normalized;
+        // Rotate PlayerRoot, not the child Brawler GameObject
+        Transform root = GetComponentInParent<CharacterController>()?.transform
+                         ?? transform.parent ?? transform;
+        Vector3 dir = (t.position - root.position).normalized;
         dir.y = 0;
         if (dir != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(dir);
+            root.rotation = Quaternion.LookRotation(dir);
     }
 
     void Update()

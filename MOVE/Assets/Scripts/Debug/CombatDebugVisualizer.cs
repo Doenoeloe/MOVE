@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 
-/// Provides in-scene visual feedback for combat events when no animations exist yet.
-/// Attach to PlayerRoot alongside PlayerCombatManager.
-/// Draws hit flash, attack range sphere, and target line every frame in-editor.
 [RequireComponent(typeof(PlayerCombatManager))]
 [RequireComponent(typeof(TargetingSystem))]
 public class CombatDebugVisualizer : MonoBehaviour
@@ -58,7 +55,6 @@ public class CombatDebugVisualizer : MonoBehaviour
         }
     }
 
-    // Called externally by PlayerCombatManager.OnTakeHit via SendMessage or direct ref
     public void FlashHit() => Flash(hitFlashColor);
 
     void Flash(Color c)
@@ -74,8 +70,6 @@ public class CombatDebugVisualizer : MonoBehaviour
         if (playerRenderer != null)
             playerRenderer.material.color = _baseColor;
     }
-
-    // ── Scene gizmos ───────────────────────────────────────────
 
     void OnDrawGizmos()
     {

@@ -478,6 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00402e9df764dd499ac50d2373056b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatArena
+  maxConcurrentAttackers: 1
 --- !u!4 &119520529
 Transform:
   m_ObjectHideFlags: 0
@@ -573,13 +574,14 @@ GameObject:
   - component: {fileID: 252134390}
   - component: {fileID: 252134389}
   - component: {fileID: 252134388}
+  - component: {fileID: 252134391}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Grappler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &252134387
 Transform:
   m_ObjectHideFlags: 0
@@ -592,7 +594,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1148381467}
   m_Father: {fileID: 1411003326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &252134388
@@ -675,6 +678,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 252134386}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &252134391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252134386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5b06f5a2048f5409b0aa225b476146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrapplerController
+  grabRange: 2.4
+  attackCooldown: 0.45
+  maxComboLength: 4
+  grabOrigin: {fileID: 1148381467}
+  grabRadius: 0.8
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  baseDamage: 22
+  knockbackForce: 6
+  knockbackDuration: 0.25
+  counterThrowForce: 10
+  counterThrowRadius: 3
+  pileDriveAOERadius: 4
+  pileDriveMultiplier: 5
 --- !u!1 &271423712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,6 +1920,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108326485}
   m_CullTransparentMesh: 1
+--- !u!1 &1148381466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1148381467}
+  m_Layer: 0
+  m_Name: Grab Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1148381467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148381466}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.809}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 252134387}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1311659166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2285,6 +2346,7 @@ GameObject:
   - component: {fileID: 1411003333}
   - component: {fileID: 1411003335}
   - component: {fileID: 1411003339}
+  - component: {fileID: 1411003340}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2461,6 +2523,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f230259dd7791c347b5502870dcc7177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputHandler
+--- !u!114 &1411003340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411003325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa15d90089e1a88498a448269e3fe105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SharedCharacterState
+  maxHealth: 100
+  staggerDuration: 0.4
 --- !u!1 &1427487898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2592,8 +2668,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1456025442}
   - component: {fileID: 1456025441}
-  - component: {fileID: 1456025440}
   - component: {fileID: 1456025443}
+  - component: {fileID: 1456025440}
+  - component: {fileID: 1456025446}
+  - component: {fileID: 1456025445}
+  - component: {fileID: 1456025444}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -2619,10 +2698,6 @@ MonoBehaviour:
   attackDuration: 0.4
   recoverDuration: 1
   staggerDuration: 1.2
-  telegraphColor: {r: 1, g: 0.6, b: 0, a: 1}
-  attackColor: {r: 1, g: 0.1, b: 0.1, a: 1}
-  staggerColor: {r: 0.4, g: 0.4, b: 1, a: 1}
-  maxHealth: 1000
 --- !u!195 &1456025441
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2684,6 +2759,47 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1456025444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456025439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3015b0f8faeb4f9f86182c12b3c12376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyVisuals
+  telegraphColor: {r: 1, g: 0.6, b: 0, a: 1}
+  attackColor: {r: 1, g: 0.1, b: 0.1, a: 1}
+  staggerColor: {r: 0.4, g: 0.4, b: 1, a: 1}
+  hitFlashDuration: 0.08
+--- !u!114 &1456025445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456025439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bcf7701e4c4f80b85571d5ad3c9f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyNavigator
+--- !u!114 &1456025446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456025439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87c86e138f44c0a96f3c7c334b6ad8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
 --- !u!1 &1481797621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2703,7 +2819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1481797622
 Transform:
   m_ObjectHideFlags: 0
@@ -2833,6 +2949,9 @@ GameObject:
   - component: {fileID: 1543553170}
   - component: {fileID: 1543553169}
   - component: {fileID: 1543553168}
+  - component: {fileID: 1543553174}
+  - component: {fileID: 1543553173}
+  - component: {fileID: 1543553172}
   m_Layer: 6
   m_Name: Enemy (1)
   m_TagString: Untagged
@@ -2881,10 +3000,6 @@ MonoBehaviour:
   attackDuration: 0.4
   recoverDuration: 1
   staggerDuration: 1.2
-  telegraphColor: {r: 1, g: 0.6, b: 0, a: 1}
-  attackColor: {r: 1, g: 0.1, b: 0.1, a: 1}
-  staggerColor: {r: 0.4, g: 0.4, b: 1, a: 1}
-  maxHealth: 1000
 --- !u!195 &1543553170
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2923,6 +3038,47 @@ Transform:
   - {fileID: 21516114}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1543553172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543553167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3015b0f8faeb4f9f86182c12b3c12376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyVisuals
+  telegraphColor: {r: 1, g: 0.6, b: 0, a: 1}
+  attackColor: {r: 1, g: 0.1, b: 0.1, a: 1}
+  staggerColor: {r: 0.4, g: 0.4, b: 1, a: 1}
+  hitFlashDuration: 0.08
+--- !u!114 &1543553173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543553167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bcf7701e4c4f80b85571d5ad3c9f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyNavigator
+--- !u!114 &1543553174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543553167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87c86e138f44c0a96f3c7c334b6ad8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
 --- !u!1 &1741670025
 GameObject:
   m_ObjectHideFlags: 0
@@ -3188,6 +3344,9 @@ GameObject:
   - component: {fileID: 1786681238}
   - component: {fileID: 1786681237}
   - component: {fileID: 1786681236}
+  - component: {fileID: 1786681242}
+  - component: {fileID: 1786681241}
+  - component: {fileID: 1786681240}
   m_Layer: 6
   m_Name: Enemy (2)
   m_TagString: Untagged
@@ -3236,10 +3395,6 @@ MonoBehaviour:
   attackDuration: 0.4
   recoverDuration: 1
   staggerDuration: 1.2
-  telegraphColor: {r: 1, g: 0.6, b: 0, a: 1}
-  attackColor: {r: 1, g: 0.1, b: 0.1, a: 1}
-  staggerColor: {r: 0.4, g: 0.4, b: 1, a: 1}
-  maxHealth: 1000
 --- !u!195 &1786681238
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3278,6 +3433,47 @@ Transform:
   - {fileID: 931588139}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1786681240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786681235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3015b0f8faeb4f9f86182c12b3c12376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyVisuals
+  telegraphColor: {r: 1, g: 0.6, b: 0, a: 1}
+  attackColor: {r: 1, g: 0.1, b: 0.1, a: 1}
+  staggerColor: {r: 0.4, g: 0.4, b: 1, a: 1}
+  hitFlashDuration: 0.08
+--- !u!114 &1786681241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786681235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bcf7701e4c4f80b85571d5ad3c9f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyNavigator
+--- !u!114 &1786681242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786681235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87c86e138f44c0a96f3c7c334b6ad8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
 --- !u!1 &1850313610
 GameObject:
   m_ObjectHideFlags: 0

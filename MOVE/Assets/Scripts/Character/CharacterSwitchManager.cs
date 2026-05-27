@@ -12,10 +12,16 @@ public class CharacterSwitchManager : MonoBehaviour
     // FIX: No InputScheme here — PlayerInputHandler owns all input
     private IAttacker[] _attackers;
     private IAttacker   _activeAttacker;
+    private SharedCharacterState _sharedState;
 
     void Awake()
     {
         _attackers = GetComponentsInChildren<IAttacker>(includeInactive: true);
+        _sharedState = GetComponent<SharedCharacterState>();
+        
+        if (_sharedState == null)
+            Debug.LogError("[SwitchManager] SharedCharacterState not found on PlayerRoot. " +
+                           "Add it as a component.");
     }
 
     void Start()
@@ -25,7 +31,7 @@ public class CharacterSwitchManager : MonoBehaviour
         _activeAttacker = _attackers[0];
         var go = (_activeAttacker as MonoBehaviour)?.gameObject;
         go?.SetActive(true);
-        go?.GetComponent<CharacterBase>()?.OnActivated(this);
+        go?.GetComponent<CharacterBase>()?.OnActivated(this, _sharedState);
  
         // Deactivate all others
         for (int i = 1; i < _attackers.Length; i++)
@@ -56,7 +62,7 @@ public class CharacterSwitchManager : MonoBehaviour
         _activeAttacker = _attackers[index];
         incomingGO?.SetActive(true);
 
-        incomingGO?.GetComponent<CharacterBase>()?.OnActivated(this);
+        incomingGO?.GetComponent<CharacterBase>()?.OnActivated(this, _sharedState);
     }
 
     public GameObject GetActiveCharacter() =>
