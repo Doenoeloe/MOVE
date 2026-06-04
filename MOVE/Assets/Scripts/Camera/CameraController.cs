@@ -1,12 +1,6 @@
 ﻿using UnityEngine;
 using Unity.Cinemachine;
 
-/// Cinemachine 3.x version.
-/// Uses two CinemachineCamera components:
-///   _freeCam  — Orbital Follow (your existing FreeLook Camera)
-///   _lockCam  — Hard lock-on camera (second CinemachineCamera, lower priority by default)
-///
-/// Assign both in the Inspector.
 public class CameraController : MonoBehaviour
 {
     [Header("Cinemachine Cameras (3.x)")]
@@ -24,6 +18,9 @@ public class CameraController : MonoBehaviour
 
     private Transform _lockTarget;
     private bool      _isLocked;
+
+    // ── Roll override (set by WallRunAbility for camera tilt) ─────────────
+    private float _rollOverride;
 
     void Awake()
     {
@@ -60,11 +57,21 @@ public class CameraController : MonoBehaviour
         SetLockOn(true);
     }
 
+    /// <summary>
+    /// Called by WallRunAbility each frame to tilt the camera into the wall.
+    /// Pass 0 to reset. WallRunAbility handles the lerp on its end so this
+    /// just needs to apply whatever value it receives.
+    /// </summary>
+    public void SetRollOverride(float degrees)
+    {
+        _rollOverride = degrees;
+        ApplyRoll();
+    }
+
     void SetLockOn(bool locked)
     {
         _isLocked = locked;
 
-        // In Cinemachine 3.x Priority is still an int on CinemachineCamera
         if (freeCam != null) freeCam.Priority  = locked ? 10 : 11;
         if (lockCam != null) lockCam.Priority  = locked ? 11 : 10;
 
@@ -95,6 +102,32 @@ public class CameraController : MonoBehaviour
         lockCam.transform.LookAt(
             Vector3.Lerp(transform.position, _lockTarget.position, 0.5f)
             + Vector3.up * 0.8f);
+
+        // Apply roll on top of the look-at rotation
+        ApplyRollToTransform(lockCam.transform);
+    }
+
+    // ── Roll helpers ──────────────────────────────────────────────────────
+
+    void ApplyRoll()
+    {
+        // Apply to whichever camera is currently active
+        Transform camTransform = _isLocked && lockCam != null
+            ? lockCam.transform
+            : freeCam != null ? freeCam.transform : null;
+
+        if (camTransform != null)
+            ApplyRollToTransform(camTransform);
+    }
+
+    /// Rotates the camera transform around its own forward axis by _rollOverride degrees.
+    /// Preserves the existing position and forward direction — only the roll changes.
+    void ApplyRollToTransform(Transform camTransform)
+    {
+        if (Mathf.Approximately(_rollOverride, 0f)) return;
+
+        camTransform.rotation = camTransform.rotation *
+            Quaternion.AngleAxis(_rollOverride, Vector3.forward);
     }
 
     Transform FindBestLockTarget()

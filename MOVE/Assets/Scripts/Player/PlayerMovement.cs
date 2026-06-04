@@ -3,47 +3,64 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Speed")]
-    public float walkSpeed    = 3f;
-    public float runSpeed     = 6f;
-    public float rotateSpeed  = 720f; // degrees per second
+    [Header("Speed")] 
+    public float walkSpeed = 3f;
+    public float runSpeed = 6f;
+    public float rotateSpeed = 720f; // degrees per second
 
-    [Header("Physics")]
-    public float gravity      = -20f;
+    [Header("Physics")] 
+    public float gravity = -20f;
     public float groundCheckDistance = 0.1f;
     public LayerMask groundLayer;
 
-    [Header("Root Motion")]
+    [Header("Root Motion")] 
     public bool useRootMotion = false;
 
+    [Header("MovementAbilities")] 
+    private IMovementAbility[] _movementAbilities;
+
     // Animator parameter names — match these in your Blend Tree
-    static readonly int HashSpeed  = Animator.StringToHash("Speed");
-    static readonly int HashDirX   = Animator.StringToHash("DirX");
-    static readonly int HashDirY   = Animator.StringToHash("DirY");
+    static readonly int HashSpeed = Animator.StringToHash("Speed");
+    static readonly int HashDirX = Animator.StringToHash("DirX");
+    static readonly int HashDirY = Animator.StringToHash("DirY");
 
-    private CharacterController _cc;
-    private Animator            _anim;
+    public CharacterController _cc;
+    public Animator _anim;
 
-    private Camera              _cam;
+    public Camera _cam;
 
     private Vector2 _moveInput;
-    private float   _verticalVelocity;
-    private bool    _isGrounded;
+    private float _verticalVelocity;
+
+    public float VerticalVelocity
+    {
+        get => _verticalVelocity;
+        set => _verticalVelocity = value;
+    }
+
+    private bool _isGrounded;
+    public bool IsGrounded => _isGrounded;
+    public Vector3 GetCameraRelativeInput() => CameraRelativeInput();
 
     // Set externally by CameraController when lock-on activates
     [HideInInspector] public Transform LockOnTarget;
 
     void Awake()
     {
-        _cc    = GetComponent<CharacterController>();
-        _anim  = GetComponent<Animator>();
+        _cc = GetComponent<CharacterController>();
+        _anim = GetComponent<Animator>();
 
-        _cam   = Camera.main;
+        _cam = Camera.main;
+        _movementAbilities = GetComponents<IMovementAbility>();
     }
 
-    void OnEnable() { }
+    void OnEnable()
+    {
+    }
 
-    void OnDisable() { }
+    void OnDisable()
+    {
+    }
 
     // Called by PlayerInputHandler
     public void SetMoveInput(Vector2 input) => _moveInput = input;
@@ -55,7 +72,19 @@ public class PlayerMovement : MonoBehaviour
         ApplyGravity();
 
         if (!useRootMotion)
-            MoveAndRotate();
+        {
+            bool abilityConsumed = false;
+            foreach (var ability in _movementAbilities)
+            {
+                if (ability.TryExecute(GetCameraRelativeInput(), Time.deltaTime))
+                {
+                    abilityConsumed = true;
+                    break; // only one ability drives movement per frame
+                }
+            }
+            if (!abilityConsumed)
+                MoveAndRotate();
+        }
 
         DriveAnimator();
     }
@@ -78,8 +107,8 @@ public class PlayerMovement : MonoBehaviour
     void MoveAndRotate()
     {
         Vector3 worldDir = CameraRelativeInput();
-        float   speed    = _moveInput.magnitude > 0.5f ? runSpeed : walkSpeed;
-        float   mag      = _moveInput.magnitude;
+        float speed = _moveInput.magnitude > 0.5f ? runSpeed : walkSpeed;
+        float mag = _moveInput.magnitude;
 
         Vector3 move = worldDir * (speed * mag);
         move.y = _verticalVelocity;
@@ -111,9 +140,11 @@ public class PlayerMovement : MonoBehaviour
         if (_cam == null) return new Vector3(_moveInput.x, 0, _moveInput.y);
 
         Vector3 camForward = _cam.transform.forward;
-        Vector3 camRight   = _cam.transform.right;
-        camForward.y = 0; camForward.Normalize();
-        camRight.y   = 0; camRight.Normalize();
+        Vector3 camRight = _cam.transform.right;
+        camForward.y = 0;
+        camForward.Normalize();
+        camRight.y = 0;
+        camRight.Normalize();
 
         return (camForward * _moveInput.y + camRight * _moveInput.x).normalized
                * _moveInput.magnitude;
@@ -146,8 +177,8 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckGround()
     {
-        _isGrounded = Physics.CheckSphere(
-            transform.position, groundCheckDistance, groundLayer);
+        Vector3 spherePos = transform.position + Vector3.down * (_cc.height / 2f - _cc.radius);
+        _isGrounded = Physics.CheckSphere(spherePos, _cc.radius + groundCheckDistance, groundLayer);
     }
 
     void ApplyGravity()

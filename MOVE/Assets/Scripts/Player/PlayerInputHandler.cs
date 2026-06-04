@@ -11,7 +11,7 @@ public class PlayerInputHandler : MonoBehaviour
     private PlayerMovement         _movement;
     private CameraController       _camera;
     private CharacterSwitchManager _switcher;
-
+    private JumpAbility            _jump;
     void Awake()
     {
         _input    = new InputScheme();
@@ -19,6 +19,7 @@ public class PlayerInputHandler : MonoBehaviour
         _movement = GetComponent<PlayerMovement>();
         _camera   = GetComponent<CameraController>();
         _switcher = GetComponent<CharacterSwitchManager>();
+        _jump     = GetComponent<JumpAbility>();  
     }
 
     void OnEnable()
@@ -43,6 +44,10 @@ public class PlayerInputHandler : MonoBehaviour
             else if (key == "2" || key == "dpadUp")    _switcher.SwitchTo(1);
             else if (key == "3" || key == "dpadRight") _switcher.SwitchTo(2);
         };
+        
+        _input.Player.Jump.performed += _ => _jump.OnJumpPressed();
+        _input.Player.Jump.canceled  += _ => _jump.OnJumpReleased();
+
 
         _input.Player.Enable();
     }
