@@ -6,5 +6,5 @@ public interface IAttackSlotProvider
     
     void ReleaseAttackSlot(EnemyAI enemy);
     
-    void RegisterEnemy(EnemyAI enemy);
+    // void RegisterEnemy(EnemyAI enemy);
 }

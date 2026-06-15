@@ -140,14 +140,16 @@ public class PlayerMovement : MonoBehaviour
         if (_cam == null) return new Vector3(_moveInput.x, 0, _moveInput.y);
 
         Vector3 camForward = _cam.transform.forward;
-        Vector3 camRight = _cam.transform.right;
-        camForward.y = 0;
-        camForward.Normalize();
-        camRight.y = 0;
-        camRight.Normalize();
+        Vector3 camRight   = _cam.transform.right;
+        camForward.y = 0; camForward.Normalize();
+        camRight.y   = 0; camRight.Normalize();
 
-        return (camForward * _moveInput.y + camRight * _moveInput.x).normalized
-               * _moveInput.magnitude;
+        // Combine first, THEN normalize — preserves magnitude from input
+        Vector3 dir = camForward * _moveInput.y + camRight * _moveInput.x;
+
+        // Clamp to magnitude 1 max, but keep sub-1 magnitudes for analog stick walk/run
+        float inputMag = Mathf.Min(_moveInput.magnitude, 1f);
+        return dir.sqrMagnitude > 0.001f ? dir.normalized * inputMag : Vector3.zero;
     }
 
     void RotateTowardTarget(Transform target)

@@ -11,28 +11,28 @@ public class EnemyVisuals : MonoBehaviour
     [Header("Hit Flash")]
     public float hitFlashDuration = 0.08f;
 
-    private EnemyAI  _ai;
+    private EnemyStateMachine  _ai;
     private Renderer _renderer;
     private Color    _baseColor;
 
     void Awake()
     {
-        _ai       = GetComponent<EnemyAI>();
+        _ai       = GetComponent<EnemyStateMachine>();
         _renderer = GetComponentInChildren<Renderer>();
 
         if (_renderer != null)
             _baseColor = _renderer.material.color;
     }
 
-    public void SetForState(EnemyAI.AIState state)
+    public void SetForState(EnemyStateMachine.AIState state)
     {
         switch (state)
         {
-            case EnemyAI.AIState.Telegraph: SetColor(telegraphColor); break;
-            case EnemyAI.AIState.Attacking: SetColor(attackColor);    break;
-            case EnemyAI.AIState.Stagger:   SetColor(staggerColor);   break;
-            case EnemyAI.AIState.Recover:   SetColor(Color.gray);     break;
-            case EnemyAI.AIState.Dead:      SetColor(Color.black);    break;
+            case EnemyStateMachine.AIState.Telegraph: SetColor(telegraphColor); break;
+            case EnemyStateMachine.AIState.Attacking: SetColor(attackColor);    break;
+            case EnemyStateMachine.AIState.Stagger:   SetColor(staggerColor);   break;
+            case EnemyStateMachine.AIState.Recover:   SetColor(Color.gray);     break;
+            case EnemyStateMachine.AIState.Dead:      SetColor(Color.black);    break;
             default:                        SetColor(_baseColor);     break;
         }
     }

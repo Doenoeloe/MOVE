@@ -18,8 +18,7 @@ public class CameraController : MonoBehaviour
 
     private Transform _lockTarget;
     private bool      _isLocked;
-
-    // ── Roll override (set by WallRunAbility for camera tilt) ─────────────
+    
     private float _rollOverride;
 
     void Awake()

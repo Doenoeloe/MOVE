@@ -3,14 +3,13 @@
 public class CombatArena : MonoBehaviour, IAttackSlotProvider
 {
     [Header("Slot Settings")]
-    public int maxConcurrentAttackers = 1;
-
-    private EnemyAI             _currentAttacker;
-    private PlayerCombatManager _playerCombat;
-    private CounterWindow       _counterWindow;
-    
+    public int maxConcurrentAttackers = 1; // reserved for future multi-slot support
+ 
     public static CombatArena Instance { get; private set; }
-
+ 
+    private EnemyAI             _currentAttacker;
+    private CounterWindow       _counterWindow;
+ 
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,47 +19,46 @@ public class CombatArena : MonoBehaviour, IAttackSlotProvider
             return;
         }
         Instance = this;
-
+ 
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
-        {
-            _playerCombat  = player.GetComponent<PlayerCombatManager>();
             _counterWindow = player.GetComponent<CounterWindow>();
-        }
     }
-
+ 
     void OnEnable()
     {
-        // Push ourselves to every enemy already placed in the scene.
+        // Register ourselves with every enemy already in the scene
         foreach (var enemy in FindObjectsOfType<EnemyAI>())
             enemy.SetSlotProvider(this);
     }
-    
-
-    public bool IsSlotFree => _currentAttacker == null;
-    
+ 
+    // ── IAttackSlotProvider ────────────────────────────────────
+ 
     public bool RequestAttack(EnemyAI enemy)
     {
         if (_currentAttacker != null) return false;
-
+ 
         _currentAttacker = enemy;
         _counterWindow?.Open(enemy.transform);
         return true;
     }
-
+ 
     public void ReleaseAttackSlot(EnemyAI enemy)
     {
         if (_currentAttacker == enemy)
             _currentAttacker = null;
     }
-    
+ 
+    // ── Public helpers ─────────────────────────────────────────
+ 
+    public bool IsSlotFree => _currentAttacker == null;
+ 
+    /// Called when a new enemy spawns at runtime
     public void RegisterEnemy(EnemyAI enemy)
     {
-        if (enemy != null)
-            enemy.SetSlotProvider(this);
+        if (enemy != null) enemy.SetSlotProvider(this);
     }
-    
-
+ 
 #if UNITY_EDITOR
     void OnGUI()
     {

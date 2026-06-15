@@ -196,7 +196,7 @@ public class GrapplerController : CharacterBase, IFinisher
         if (agent == null || !agent.enabled || !agent.isOnNavMesh) yield break;
 
         var enemy = tf.GetComponent<EnemyAI>();
-        if (enemy != null && enemy.CurrentState != EnemyAI.AIState.Dead)
+        if (enemy != null && enemy.CurrentState != EnemyStateMachine.AIState.Dead)
             agent.isStopped = false;
     }
 
@@ -208,7 +208,7 @@ public class GrapplerController : CharacterBase, IFinisher
         if (attacker == null) yield break;
 
         var attackerEnemy = attacker.GetComponent<EnemyAI>();
-        if (attackerEnemy != null && attackerEnemy.CurrentState == EnemyAI.AIState.Dead)
+        if (attackerEnemy != null && attackerEnemy.CurrentState == EnemyStateMachine.AIState.Dead)
             yield break;
 
         FaceTarget(attacker);
@@ -231,7 +231,7 @@ public class GrapplerController : CharacterBase, IFinisher
         {
             if (hit.transform == attacker) continue;
             var e = hit.transform.GetComponent<EnemyAI>();
-            if (e != null && e.CurrentState != EnemyAI.AIState.Dead)
+            if (e != null && e.CurrentState != EnemyStateMachine.AIState.Dead)
                 chainHits.Add(e);
         }
 
@@ -266,7 +266,7 @@ public class GrapplerController : CharacterBase, IFinisher
 
         // Enemy may have died during pile driver wind-up
         var primaryCheck = target.GetComponent<EnemyAI>();
-        if (primaryCheck != null && primaryCheck.CurrentState == EnemyAI.AIState.Dead)
+        if (primaryCheck != null && primaryCheck.CurrentState == EnemyStateMachine.AIState.Dead)
             yield break;
 
         var primaryEnemy = target.GetComponent<EnemyAI>();

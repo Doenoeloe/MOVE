@@ -138,36 +138,34 @@ public class WallRunAbility : MonoBehaviour, IMovementAbility
         if (Physics.Raycast(transform.position, transform.right, out rightHit, wallCheckDistance, wallLayer))
         {
             Vector3 wallForward = Vector3.Cross(rightHit.normal, Vector3.up);
-            if (Mathf.Abs(Vector3.Dot(transform.forward, wallForward)) >= wallMinParallelDot)
+            // Also check the flipped direction — Cross can give either tangent
+            float dot = Mathf.Abs(Vector3.Dot(transform.forward, wallForward));
+            float dotFlipped = Mathf.Abs(Vector3.Dot(transform.forward, -wallForward));
+            if (Mathf.Max(dot, dotFlipped) >= wallMinParallelDot)
             {
-                hit = rightHit;
-                side = 1;
-                return true;
+                hit = rightHit; side = 1; return true;
             }
         }
 
         if (Physics.Raycast(transform.position, -transform.right, out leftHit, wallCheckDistance, wallLayer))
         {
             Vector3 wallForward = Vector3.Cross(leftHit.normal, Vector3.up);
-            if (Mathf.Abs(Vector3.Dot(transform.forward, wallForward)) >= wallMinParallelDot)
+            float dot = Mathf.Abs(Vector3.Dot(transform.forward, wallForward));
+            float dotFlipped = Mathf.Abs(Vector3.Dot(transform.forward, -wallForward));
+            if (Mathf.Max(dot, dotFlipped) >= wallMinParallelDot)
             {
-                hit = leftHit;
-                side = -1;
-                return true;
+                hit = leftHit; side = -1; return true;
             }
         }
 
-        hit = default;
-        side = 0;
-        return false;
+        hit = default; side = 0; return false;
     }
     bool TryDetectWallUp(out RaycastHit hit)
     {
         if (!Physics.Raycast(transform.position, transform.forward, out hit, 
                 wallCheckDistance, wallLayer))
             return false;
-
-        // Must be moving fast enough toward the wall
+        
         float forwardSpeed = Vector3.Dot(
             _movement._cc.velocity, transform.forward);
         return forwardSpeed >= minEntryForwardSpeed;

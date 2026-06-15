@@ -14,15 +14,27 @@ public class CounterWindow : MonoBehaviour
     public event Action            OnWindowResolved;
     public event Action            OnWindowExpired;
 
+    // Fires on successful parry — bool is true if it was a perfect parry
+    public event Action<bool> OnParrySuccess;
+
+    [Header("Perfect Parry")]
+    public float perfectWindowDuration = 0.3f; // first N seconds = perfect window
+
     private Coroutine _windowRoutine;
+    private float     _windowStartTime;
 
     public void Open(Transform attacker)
     {
         if (_windowRoutine != null)
             StopCoroutine(_windowRoutine);
 
-        PendingAttacker = attacker;
-        IsOpen = true;
+        PendingAttacker  = attacker;
+        IsOpen           = true;
+        _windowStartTime = Time.time;
+
+        // Trigger glow on the attacker's weapon
+        attacker?.GetComponent<ParrySignal>()?.TriggerGlow(duration);
+
         OnWindowOpened?.Invoke(attacker);
         _windowRoutine = StartCoroutine(WindowRoutine());
     }
@@ -35,10 +47,15 @@ public class CounterWindow : MonoBehaviour
         _windowRoutine = null;
         IsOpen = false;
         
-        var attacker = PendingAttacker;
-        OnWindowResolved?.Invoke();       // PCM reads PendingAttacker here — still valid
-        PendingAttacker = null;           // clear after subscribers have read it
+        var attacker   = PendingAttacker;
+        bool isPerfect = (Time.time - _windowStartTime) <= perfectWindowDuration;
 
+        OnWindowResolved?.Invoke();
+        OnParrySuccess?.Invoke(isPerfect);
+        PendingAttacker = null;
+
+        // Cancel glow immediately on successful parry
+        attacker?.GetComponent<ParrySignal>()?.CancelGlow();
         attacker?.GetComponent<EnemyAI>()?.OnCountered();
     }
 
@@ -66,6 +83,7 @@ public class CounterWindow : MonoBehaviour
         _windowRoutine = null;
 
         OnWindowExpired?.Invoke();
+        attacker?.GetComponent<ParrySignal>()?.CancelGlow();
         attacker?.GetComponent<EnemyAI>()?.OnCounterMissed();
     }
 }
