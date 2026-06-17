@@ -15,7 +15,7 @@ public class CharacterSwitchManager : MonoBehaviour
     private IAttacker   _activeAttacker;
     private SharedCharacterState _sharedState;
     private readonly List<ICharacterSwitchObserver> _observers = new();
-
+    
     void Awake()
     {
         _attackers = GetComponentsInChildren<IAttacker>(includeInactive: true);
@@ -82,6 +82,7 @@ public class CharacterSwitchManager : MonoBehaviour
         
         foreach (var obs in _observers)
             obs.OnCharacterSwitched(previousIndex, index);
+        
     }
 
     public GameObject GetActiveCharacter() =>

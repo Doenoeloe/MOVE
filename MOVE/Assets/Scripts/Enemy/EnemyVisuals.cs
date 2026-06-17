@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Vertaalt AI states naar visuele feedback (kleur).
+/// Hergebruikt op: MeleeEnemy, RangedEnemy, ShieldEnemy, BossEnemy
+/// </summary>
 [RequireComponent(typeof(EnemyAI))]
 public class EnemyVisuals : MonoBehaviour
 {
@@ -11,15 +15,14 @@ public class EnemyVisuals : MonoBehaviour
     [Header("Hit Flash")]
     public float hitFlashDuration = 0.08f;
 
-    private EnemyStateMachine  _ai;
-    private Renderer _renderer;
-    private Color    _baseColor;
+    private EnemyStateMachine _ai;
+    private Renderer          _renderer;
+    private Color             _baseColor;
 
     void Awake()
     {
         _ai       = GetComponent<EnemyStateMachine>();
         _renderer = GetComponentInChildren<Renderer>();
-
         if (_renderer != null)
             _baseColor = _renderer.material.color;
     }
@@ -33,7 +36,7 @@ public class EnemyVisuals : MonoBehaviour
             case EnemyStateMachine.AIState.Stagger:   SetColor(staggerColor);   break;
             case EnemyStateMachine.AIState.Recover:   SetColor(Color.gray);     break;
             case EnemyStateMachine.AIState.Dead:      SetColor(Color.black);    break;
-            default:                        SetColor(_baseColor);     break;
+            default:                                  SetColor(_baseColor);     break;
         }
     }
 
@@ -43,7 +46,7 @@ public class EnemyVisuals : MonoBehaviour
         SetColor(Color.white);
         Invoke(nameof(RestoreAfterFlash), hitFlashDuration);
     }
-    
+
     void RestoreAfterFlash() => SetForState(_ai.CurrentState);
 
     void SetColor(Color c)

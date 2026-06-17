@@ -12,6 +12,7 @@ public class PlayerInputHandler : MonoBehaviour
     private CameraController       _camera;
     private CharacterSwitchManager _switcher;
     private JumpAbility            _jump;
+    private ActiveSkillManager     _activeSkills;
     void Awake()
     {
         _input    = new InputScheme();
@@ -20,6 +21,7 @@ public class PlayerInputHandler : MonoBehaviour
         _camera   = GetComponent<CameraController>();
         _switcher = GetComponent<CharacterSwitchManager>();
         _jump     = GetComponent<JumpAbility>();  
+        _activeSkills = GetComponent<ActiveSkillManager>();
     }
 
     void OnEnable()
@@ -47,8 +49,10 @@ public class PlayerInputHandler : MonoBehaviour
         
         _input.Player.Jump.performed += _ => _jump.OnJumpPressed();
         _input.Player.Jump.canceled  += _ => _jump.OnJumpReleased();
-
-
+        
+        _input.Player.SkillSlot1.performed += _ => _activeSkills?.TriggerSlot(KeyCode.Q);
+        _input.Player.SkillSlot2.performed += _ => _activeSkills?.TriggerSlot(KeyCode.E);
+        
         _input.Player.Enable();
     }
 

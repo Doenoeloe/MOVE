@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a62a3c99c9ef6a4ca0d35107283711e, type: 3}
-  m_Name: LightEnemy
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  aggroRange: 10
-  attackRange: 20.29
-  telegraphDuration: 0.6
-  attackDuration: 0.4
-  recoverDuration: 1
-  staggerDuration: 1.2
-  maxHealth: 100
-  baseDamage: 10
+  m_Script: {fileID: 11500000, guid: fbafb13ad5fd41f7b916a3625d252a4b, type: 3}
+  m_Name: BossEnemyData
+  m_EditorClassIdentifier: Assembly-CSharp::BossEnemyData
   moveSpeed: 3.5
+  aggroRange: 10
+  attackRange: 2
+  telegraphDuration: 0.8
+  attackDuration: 0.4
+  staggerDuration: 0.6
+  recoverDuration: 1
+  xpReward: 20

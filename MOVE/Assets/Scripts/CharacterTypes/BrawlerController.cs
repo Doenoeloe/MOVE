@@ -46,10 +46,14 @@ public class BrawlerController : CharacterBase, ICounterable, IFinisher
         base.OnActivated(mgr,sct);
         _anim  = GetComponent<Animator>();
         _combo = GetComponentInParent<ComboTracker>();
- 
+        
         Debug.Log($"[Brawler] OnActivated — _combo found: {_combo != null}, " +
                   $"_anim found: {_anim != null}");
- 
+        
+        var handler = GetComponent<SkillCardHandler>();
+        handler?.SetActiveCharacter(CharacterType.Brawler);
+        
+        
         if (_combo != null)
         {
             _combo.resetTime         = data != null ? data.comboResetTime : 1.2f;
@@ -96,7 +100,9 @@ public class BrawlerController : CharacterBase, ICounterable, IFinisher
         Debug.Log($"[Brawler] Resolving hit on target: {target?.name}");
         ResolveHit(target);
  
-        _cooldownTimer = AttackCooldown;
+        var handler = GetComponentInParent<SkillCardHandler>();
+        float cdMult = handler != null ? handler.CooldownMultiplier : 1f;
+        _cooldownTimer = data.attackCooldown * cdMult;
     }
  
     // ── ICounterable ──────────────────────────────────────────
@@ -177,14 +183,18 @@ public class BrawlerController : CharacterBase, ICounterable, IFinisher
  
     float ComputeDamage()
     {
-        float comboBonus = 1f + (_combo != null ? _combo.Count * 0.05f : 0f);
-        return BaseDamage * comboBonus;
+        var handler    = GetComponentInParent<SkillCardHandler>();
+        float cardMult = handler != null ? handler.DamageMultiplier : 1f;
+        float combo    = 1f + (_combo != null ? _combo.Count * 0.05f : 0f);
+        return BaseDamage * combo * cardMult;
     }
  
     void ApplyDamage(EnemyAI enemy, float amount)
     {
         enemy.TakeDamage(amount);
         // Tell PlayerCombatManager to increment the combo counter
+        
+        GetComponentInParent<SkillCardHandler>()?.NotifyAttackLanded(enemy.transform);
         
         if (_combo != null)
             StartCoroutine(TrackEnemyStagger(enemy));

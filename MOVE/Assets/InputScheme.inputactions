@@ -68,6 +68,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SkillSlot1",
+                    "type": "Button",
+                    "id": "2f63e021-d125-4fa6-9165-76a83efca7be",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SkillSlot2",
+                    "type": "Button",
+                    "id": "b176b458-d127-4a66-babf-db009319a544",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -238,17 +256,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8dd944cb-73ce-4ed3-8c99-b0cc0b1f2506",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Counter",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b08e5389-d6d3-4c75-90ae-ca663904e6fa",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
@@ -367,6 +374,94 @@
                     "action": "Finisher",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4ebafda2-3040-48cf-aba1-8fe0446acfab",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillSlot1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "526800aa-e3c2-4c1d-9eee-bc20445516a9",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillSlot1",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "935ac800-5331-41f2-8356-f01ea01302e0",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillSlot1",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "947d8f5b-a82f-4f5b-8663-e380a833f490",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillSlot1",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d47f5a19-696f-4ae9-a01d-7bfb886b92ae",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillSlot2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "5c65c827-f7e3-49b6-a3e3-d8c26e322b44",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillSlot2",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "dba02957-2fa3-421d-a88e-4b39f4fe7762",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillSlot2",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "99358b61-bf2a-45db-849b-6d458af46a40",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillSlot2",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

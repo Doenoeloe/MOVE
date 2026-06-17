@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Beheert NavMeshAgent movement. Los component zodat het hergebruikt kan worden
+/// zonder de state machine te hoeven aanpassen.
+/// Hergebruikt op: MeleeEnemy, RangedEnemy, ShieldEnemy, BossEnemy
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyNavigator : MonoBehaviour
 {
@@ -14,13 +19,13 @@ public class EnemyNavigator : MonoBehaviour
         _agent.isStopped = false;
         _agent.SetDestination(destination);
     }
-    
+
     public void Stop()
     {
         if (!IsUsable()) return;
         _agent.isStopped = true;
     }
-    
+
     public void ResumeIdle()
     {
         if (!IsUsable()) return;
@@ -36,7 +41,6 @@ public class EnemyNavigator : MonoBehaviour
     public void FaceTarget(Transform target)
     {
         if (target == null) return;
-
         Vector3 dir = (target.position - transform.position).normalized;
         dir.y = 0f;
         if (dir != Vector3.zero)

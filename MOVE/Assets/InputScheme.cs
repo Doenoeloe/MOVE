@@ -154,6 +154,24 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkillSlot1"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f63e021-d125-4fa6-9165-76a83efca7be"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkillSlot2"",
+                    ""type"": ""Button"",
+                    ""id"": ""b176b458-d127-4a66-babf-db009319a544"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -324,17 +342,6 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8dd944cb-73ce-4ed3-8c99-b0cc0b1f2506"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Counter"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""b08e5389-d6d3-4c75-90ae-ca663904e6fa"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
@@ -453,6 +460,94 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
                     ""action"": ""Finisher"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4ebafda2-3040-48cf-aba1-8fe0446acfab"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillSlot1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""526800aa-e3c2-4c1d-9eee-bc20445516a9"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillSlot1"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""935ac800-5331-41f2-8356-f01ea01302e0"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillSlot1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""947d8f5b-a82f-4f5b-8663-e380a833f490"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillSlot1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d47f5a19-696f-4ae9-a01d-7bfb886b92ae"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillSlot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""5c65c827-f7e3-49b6-a3e3-d8c26e322b44"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillSlot2"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""dba02957-2fa3-421d-a88e-4b39f4fe7762"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillSlot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""99358b61-bf2a-45db-849b-6d458af46a40"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillSlot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -485,6 +580,8 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
         m_Player_SwitchCharacter = m_Player.FindAction("SwitchCharacter", throwIfNotFound: true);
         m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
         m_Player_Finisher = m_Player.FindAction("Finisher", throwIfNotFound: true);
+        m_Player_SkillSlot1 = m_Player.FindAction("SkillSlot1", throwIfNotFound: true);
+        m_Player_SkillSlot2 = m_Player.FindAction("SkillSlot2", throwIfNotFound: true);
     }
 
     ~@InputScheme()
@@ -572,6 +669,8 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SwitchCharacter;
     private readonly InputAction m_Player_LockOn;
     private readonly InputAction m_Player_Finisher;
+    private readonly InputAction m_Player_SkillSlot1;
+    private readonly InputAction m_Player_SkillSlot2;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -611,6 +710,14 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Finisher".
         /// </summary>
         public InputAction @Finisher => m_Wrapper.m_Player_Finisher;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SkillSlot1".
+        /// </summary>
+        public InputAction @SkillSlot1 => m_Wrapper.m_Player_SkillSlot1;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SkillSlot2".
+        /// </summary>
+        public InputAction @SkillSlot2 => m_Wrapper.m_Player_SkillSlot2;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -658,6 +765,12 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
             @Finisher.started += instance.OnFinisher;
             @Finisher.performed += instance.OnFinisher;
             @Finisher.canceled += instance.OnFinisher;
+            @SkillSlot1.started += instance.OnSkillSlot1;
+            @SkillSlot1.performed += instance.OnSkillSlot1;
+            @SkillSlot1.canceled += instance.OnSkillSlot1;
+            @SkillSlot2.started += instance.OnSkillSlot2;
+            @SkillSlot2.performed += instance.OnSkillSlot2;
+            @SkillSlot2.canceled += instance.OnSkillSlot2;
         }
 
         /// <summary>
@@ -690,6 +803,12 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
             @Finisher.started -= instance.OnFinisher;
             @Finisher.performed -= instance.OnFinisher;
             @Finisher.canceled -= instance.OnFinisher;
+            @SkillSlot1.started -= instance.OnSkillSlot1;
+            @SkillSlot1.performed -= instance.OnSkillSlot1;
+            @SkillSlot1.canceled -= instance.OnSkillSlot1;
+            @SkillSlot2.started -= instance.OnSkillSlot2;
+            @SkillSlot2.performed -= instance.OnSkillSlot2;
+            @SkillSlot2.canceled -= instance.OnSkillSlot2;
         }
 
         /// <summary>
@@ -792,5 +911,19 @@ public partial class @InputScheme: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnFinisher(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkillSlot1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkillSlot1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkillSlot2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkillSlot2(InputAction.CallbackContext context);
     }
 }
