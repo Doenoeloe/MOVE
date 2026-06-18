@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyData
   moveSpeed: 3.5
   aggroRange: 8
-  attackRange: 2
+  attackRange: 2.5
   telegraphDuration: 1.2
   attackDuration: 0.4
   staggerDuration: 0.6

@@ -82,7 +82,15 @@ public class EnemyStateMachine : MonoBehaviour
             EnterState(AIState.Stagger);
         };
     }
-
+    
+    void Start()
+    {
+        if (_arena == null)
+            _arena = CombatArena.Instance;
+        
+        _arena?.RegisterEnemy(_enemyAI);
+    }
+    
     void Update()
     {
         if (CurrentState == AIState.Dead)

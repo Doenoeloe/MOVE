@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossEnemyData
   moveSpeed: 3.5
   aggroRange: 10
-  attackRange: 2
+  attackRange: 4
   telegraphDuration: 0.8
   attackDuration: 0.4
   staggerDuration: 0.6
   recoverDuration: 1
-  xpReward: 20
+  xpReward: 100

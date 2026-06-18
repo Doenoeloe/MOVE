@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1972579515299931052
+--- !u!1 &4025413213941755745
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,30 +8,202 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1999371623764553281}
-  m_Layer: 0
-  m_Name: FirePoint
+  - component: {fileID: 7810822256508700174}
+  - component: {fileID: 3203890459822567917}
+  - component: {fileID: 3761090846251691596}
+  - component: {fileID: 732935383541171112}
+  - component: {fileID: 4611219240788271754}
+  - component: {fileID: 691853294386852479}
+  - component: {fileID: 1518843324133295662}
+  - component: {fileID: 146556704098286079}
+  - component: {fileID: 757807943705112583}
+  - component: {fileID: 804070555110425715}
+  - component: {fileID: 5416652176136978974}
+  m_Layer: 6
+  m_Name: BossEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1999371623764553281
+--- !u!4 &7810822256508700174
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1972579515299931052}
+  m_GameObject: {fileID: 4025413213941755745}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.51}
+  m_LocalPosition: {x: 0, y: 2.25, z: -79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 85851832957362430}
+  m_Children:
+  - {fileID: 898059420807447274}
+  - {fileID: 1026269290084922582}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5874325823283667592
+--- !u!195 &3203890459822567917
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &3761090846251691596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4c2b71e4704b30ae68c87d19226e2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
+  maxHealth: 100
+  faction: {fileID: 732935383541171112}
+--- !u!114 &732935383541171112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b46dee919e467187e2b944c803fa30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FactionComponent
+  faction: 1
+--- !u!114 &4611219240788271754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fa5d1f8e8f941eca690407a1cd40a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStateMachine
+  data: {fileID: 11400000, guid: 2976ca29b4c2f0b4596955f5cf0e6387, type: 2}
+--- !u!114 &691853294386852479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa5a5a22080f478aacdf27ddac53b695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+--- !u!114 &1518843324133295662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 310c11328a6a4a159348433c4a3c0a02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RangedAttackBehaviour
+  projectilePrefab: {fileID: 411530897683536683, guid: 8d868d283d6cfed4a8ae3a30def78b24, type: 3}
+  firePoint: {fileID: 1026269290084922582}
+  projectileSpeed: 12
+  projectileDamage: 10
+  spreadAngle: 0
+--- !u!114 &146556704098286079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4ef5fb665c45ad8c2377f638eb7838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArmorComponent
+  damageReduction: 5
+  armorDurability: 30
+--- !u!114 &757807943705112583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3015b0f8faeb4f9f86182c12b3c12376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyVisuals
+  telegraphColor: {r: 1, g: 0.6, b: 0, a: 1}
+  attackColor: {r: 1, g: 0.1, b: 0.1, a: 1}
+  staggerColor: {r: 0.4, g: 0.4, b: 1, a: 1}
+  hitFlashDuration: 0.08
+--- !u!114 &804070555110425715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3015b0f8faeb4f9f86182c12b3c12376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyVisuals
+  telegraphColor: {r: 1, g: 0.6, b: 0, a: 1}
+  attackColor: {r: 1, g: 0.1, b: 0.1, a: 1}
+  staggerColor: {r: 0.4, g: 0.4, b: 1, a: 1}
+  hitFlashDuration: 0.08
+--- !u!136 &5416652176136978974
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025413213941755745}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 4
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &5806292036492154725
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,47 +211,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2731503409473215352}
-  - component: {fileID: 572199316387004459}
-  - component: {fileID: 5011148264655359897}
-  - component: {fileID: 7388478930578152403}
-  m_Layer: 0
+  - component: {fileID: 898059420807447274}
+  - component: {fileID: 914547831707184868}
+  - component: {fileID: 8587941730763972381}
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2731503409473215352
+--- !u!4 &898059420807447274
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5874325823283667592}
+  m_GameObject: {fileID: 5806292036492154725}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 85851832957362430}
+  m_Father: {fileID: 7810822256508700174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &572199316387004459
+--- !u!33 &914547831707184868
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5874325823283667592}
+  m_GameObject: {fileID: 5806292036492154725}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5011148264655359897
+--- !u!23 &8587941730763972381
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5874325823283667592}
+  m_GameObject: {fileID: 5806292036492154725}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -122,30 +293,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7388478930578152403
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5874325823283667592}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &6536677680310387556
+--- !u!1 &5820717435533698777
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,157 +301,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 85851832957362430}
-  - component: {fileID: 7776312305125033965}
-  - component: {fileID: 5209672193966561829}
-  - component: {fileID: 1645249804818784675}
-  - component: {fileID: 3219174783276676010}
-  - component: {fileID: 7871503746784500430}
-  - component: {fileID: 3002308101449868659}
-  - component: {fileID: 3574859252217341467}
-  - component: {fileID: 7473931184191618063}
-  m_Layer: 0
-  m_Name: BossEnemy
+  - component: {fileID: 1026269290084922582}
+  m_Layer: 6
+  m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &85851832957362430
+--- !u!4 &1026269290084922582
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536677680310387556}
+  m_GameObject: {fileID: 5820717435533698777}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.25, z: -79}
+  m_LocalPosition: {x: 0, y: 0, z: 1.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2731503409473215352}
-  - {fileID: 1999371623764553281}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 7810822256508700174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &7776312305125033965
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536677680310387556}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &5209672193966561829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536677680310387556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a4c2b71e4704b30ae68c87d19226e2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  maxHealth: 100
-  faction: {fileID: 1645249804818784675}
---- !u!114 &1645249804818784675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536677680310387556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b46dee919e467187e2b944c803fa30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FactionComponent
-  faction: 1
---- !u!114 &3219174783276676010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536677680310387556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa5d1f8e8f941eca690407a1cd40a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyStateMachine
-  data: {fileID: 11400000, guid: 2976ca29b4c2f0b4596955f5cf0e6387, type: 2}
---- !u!114 &7871503746784500430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536677680310387556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa5a5a22080f478aacdf27ddac53b695, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
---- !u!114 &3002308101449868659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536677680310387556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 310c11328a6a4a159348433c4a3c0a02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RangedAttackBehaviour
-  projectilePrefab: {fileID: 411530897683536683, guid: 8d868d283d6cfed4a8ae3a30def78b24, type: 3}
-  firePoint: {fileID: 1999371623764553281}
-  projectileSpeed: 12
-  projectileDamage: 10
-  spreadAngle: 0
---- !u!114 &3574859252217341467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536677680310387556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4ef5fb665c45ad8c2377f638eb7838, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ArmorComponent
-  damageReduction: 5
-  armorDurability: 30
---- !u!114 &7473931184191618063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536677680310387556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3015b0f8faeb4f9f86182c12b3c12376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyVisuals
-  telegraphColor: {r: 1, g: 0.6, b: 0, a: 1}
-  attackColor: {r: 1, g: 0.1, b: 0.1, a: 1}
-  staggerColor: {r: 0.4, g: 0.4, b: 1, a: 1}
-  hitFlashDuration: 0.08
