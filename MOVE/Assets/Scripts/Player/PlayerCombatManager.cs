@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCombatManager : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class PlayerCombatManager : MonoBehaviour
         
         _sharedState.OnStaggerEnter += () => Debug.Log("[Player] Staggered — input blocked.");
         _sharedState.OnStaggerExit  += () => Debug.Log("[Player] Stagger ended.");
-        _sharedState.OnDeath        += ()  => Debug.Log("[Player] Died.");
+        _sharedState.OnDeath        += ()  => SceneManager.LoadScene("MainMenu");
         _sharedState.OnHealthChanged += hp => Debug.Log($"[Player] Health: {hp:F0}");
     }
 

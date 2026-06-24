@@ -9,7 +9,6 @@ public class EnemyStateMachine : MonoBehaviour
 {
     [Header("Data")]
     public EnemyData data;
-
     public enum AIState { Idle, Approach, Telegraph, Attacking, Stagger, Recover, Dead }
     public AIState CurrentState { get; private set; } = AIState.Idle;
 
@@ -129,6 +128,11 @@ public class EnemyStateMachine : MonoBehaviour
     void UpdateTelegraph()
     {
         FacePlayer();
+        if (data.TriggersCombatTutorial)
+        {
+            Debug.Log("WOWOWOWOWOOWOWOW");   
+            CombatTutorialDirector.Instance?.OnEnemyBeginAttack();
+        }
         if (_stateTimer <= 0f) EnterState(AIState.Attacking);
     }
 

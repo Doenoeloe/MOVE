@@ -27,7 +27,11 @@ public class PlayerInputHandler : MonoBehaviour
     void OnEnable()
     {
         // Movement — feeds directly into PlayerMovement
-        _input.Player.Walk.performed += ctx => _movement.SetMoveInput(ctx.ReadValue<Vector2>());
+        _input.Player.Walk.performed += ctx =>
+        {
+            _movement.SetMoveInput(ctx.ReadValue<Vector2>());
+            TutorialOverlayUI.Instance?.NotifyMovementInput();
+        };
         _input.Player.Walk.canceled  += _   => _movement.SetMoveInput(Vector2.zero);
 
         // Combat

@@ -18,6 +18,7 @@ public class EnemyData : ScriptableObject
     public float attackDuration    = 0.4f;
     public float staggerDuration   = 0.6f;
     public float recoverDuration   = 1.0f;
+    public bool TriggersCombatTutorial;
 
     [Header("Rewards")]
     public int xpReward = 20;
