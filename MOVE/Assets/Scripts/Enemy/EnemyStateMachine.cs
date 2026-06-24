@@ -2,15 +2,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>
-/// Centrale AI state machine voor alle enemy types.
-/// Hergebruikt op: MeleeEnemy, RangedEnemy, ShieldEnemy, BossEnemy
-///
-/// Optionele componenten op hetzelfde GameObject bepalen het gedrag:
-///   - RangedAttackBehaviour  → vuurt projectiel in plaats van melee hit
-///   - ArmorComponent         → filtert schade voor HealthComponent
-///   - ParrySignal            → toont telegraph glow (melee enemies)
-/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(HealthComponent))]
 [RequireComponent(typeof(FactionComponent))]
@@ -27,8 +18,7 @@ public class EnemyStateMachine : MonoBehaviour
     public bool IsHittable   => CurrentState != AIState.Dead;
 
     public event Action<AIState> OnStateChanged;
-
-    // Core — altijd aanwezig
+    
     private NavMeshAgent    _agent;
     private HealthComponent _health;
     private EnemyAI         _enemyAI;
@@ -39,11 +29,10 @@ public class EnemyStateMachine : MonoBehaviour
     private SkillCardHandler _handler;
     private float           _stateTimer;
     private bool            _xpAwarded;
-
-    // Optionele componenten — aanwezig afhankelijk van enemy type
-    private RangedAttackBehaviour _ranged;   // RangedEnemy, BossEnemy
-    private ArmorComponent        _armor;    // ShieldEnemy, BossEnemy
-    private ParrySignal           _parry;    // MeleeEnemy, ShieldEnemy, BossEnemy
+    
+    private RangedAttackBehaviour _ranged;   
+    private ArmorComponent        _armor;    
+    private ParrySignal           _parry;    
 
     void Awake()
     {
@@ -55,7 +44,6 @@ public class EnemyStateMachine : MonoBehaviour
         _xpSystem = FindAnyObjectByType<XPSystem>();
         _handler  = FindAnyObjectByType<SkillCardHandler>();
 
-        // Optionele componenten — null als ze er niet op zitten
         _ranged = GetComponent<RangedAttackBehaviour>();
         _armor  = GetComponent<ArmorComponent>();
         _parry  = GetComponent<ParrySignal>();
@@ -152,12 +140,10 @@ public class EnemyStateMachine : MonoBehaviour
         {
             if (_ranged != null)
             {
-                // Ranged enemy: vuur projectiel
                 _ranged.FireAtPlayer();
             }
             else
             {
-                // Melee enemy: directe hit op speler
                 var switcher = _player?.GetComponent<CharacterSwitchManager>();
                 var activeGO = switcher?.GetActiveCharacter();
                 activeGO?.GetComponent<IHittable>()?.OnEnemyAttackLanded(transform);
@@ -221,11 +207,7 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
         }
     }
-
-    /// <summary>
-    /// Filtert schade via ArmorComponent als die aanwezig is.
-    /// Aangeroepen door EnemyAI.TakeDamage.
-    /// </summary>
+    
     public float FilterDamage(float raw)
         => _armor != null ? _armor.FilterDamage(raw) : raw;
 

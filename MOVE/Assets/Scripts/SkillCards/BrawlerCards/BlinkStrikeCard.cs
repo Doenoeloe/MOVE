@@ -26,8 +26,7 @@ public class BlinkStrikeCard : ActiveSkillCardSO
             Vector3 dir       = (nearest.position - handler.transform.position).normalized;
             float   dist      = Vector3.Distance(handler.transform.position, nearest.position);
             Vector3 targetPos = handler.transform.position + dir * Mathf.Min(dashDistance * stackCount, dist - 1.2f);
-
-            // Fix 1: bypass CharacterController so the teleport actually applies
+            
             var cc = handler.GetComponent<CharacterController>();
             if (cc != null)
             {
@@ -40,8 +39,7 @@ public class BlinkStrikeCard : ActiveSkillCardSO
                 handler.transform.position = targetPos;
             }
         }
-
-        // Fix 2: apply boost and hold it until the next attack lands
+        
         float boost = 1f + bonusDamage * stackCount;
         handler.DamageMultiplier *= boost;
         handler.StartCoroutine(ResetAfterHit(handler, boost));
@@ -68,18 +66,14 @@ public class BlinkStrikeCard : ActiveSkillCardSO
         return best;
     }
 
-    // Waits until DamageMultiplier has been consumed (dropped back toward 1)
-    // then removes whatever remainder is left from this boost.
     IEnumerator ResetAfterHit(SkillCardHandler handler, float boost)
     {
-        float baseline = handler.DamageMultiplier / boost; // value before our boost
+        float baseline = handler.DamageMultiplier / boost;
         float boosted  = handler.DamageMultiplier;
 
-        // Wait until something external lowers the multiplier (i.e. an attack consumed it)
         while (handler.DamageMultiplier >= boosted - 0.01f)
             yield return null;
 
-        // Clean up any leftover from our boost
         handler.DamageMultiplier /= boost;
     }
 }

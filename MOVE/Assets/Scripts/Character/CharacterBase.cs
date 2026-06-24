@@ -14,9 +14,7 @@ public abstract class CharacterBase : MonoBehaviour, IAttacker, IHittable
     public virtual void OnDeactivated() { }
 
     public virtual void OnStagger() { }
-
-    // IHittable — default behaviour routes through PlayerCombatManager.
-    // Grappler overrides this to absorb and throw instead.
+    
     public virtual void OnEnemyAttackLanded(Transform attacker)
     {
         GetComponentInParent<PlayerCombatManager>()?.OnTakeHit();
