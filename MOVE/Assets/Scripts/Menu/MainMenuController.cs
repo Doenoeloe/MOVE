@@ -89,6 +89,11 @@ public class MainMenuController : MonoBehaviour
         StartCoroutine(TransitionToScene("GameScene"));
     }
 
+    public void OnQuit()
+    {
+        Application.Quit();
+    }
+
     IEnumerator TransitionToScene(string sceneName)
     {
         yield return StartCoroutine(FadeCanvasGroup(fadeOverlay, 1f, 0.5f));

@@ -5915,7 +5915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2265398323255228883, guid: 2c58af58cf63cec4ca3109ab15393f10, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2265398323255228883, guid: 2c58af58cf63cec4ca3109ab15393f10, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5923,7 +5923,15 @@ PrefabInstance:
       objectReference: {fileID: 1411229689}
     - target: {fileID: 2265398323255228883, guid: 2c58af58cf63cec4ca3109ab15393f10, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnNewGame
+      value: OnQuit
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265398323255228883, guid: 2c58af58cf63cec4ca3109ab15393f10, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265398323255228883, guid: 2c58af58cf63cec4ca3109ab15393f10, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2561301465179626911, guid: 2c58af58cf63cec4ca3109ab15393f10, type: 3}
       propertyPath: hoverColor.a

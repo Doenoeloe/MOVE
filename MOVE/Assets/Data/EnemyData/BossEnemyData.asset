@@ -20,4 +20,4 @@ MonoBehaviour:
   staggerDuration: 0.6
   recoverDuration: 1
   TriggersCombatTutorial: 0
-  xpReward: 100
+  xpReward: 0

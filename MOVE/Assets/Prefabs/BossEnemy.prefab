@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 100
   faction: {fileID: 732935383541171112}
+  isBoss: 1
 --- !u!114 &732935383541171112
 MonoBehaviour:
   m_ObjectHideFlags: 0

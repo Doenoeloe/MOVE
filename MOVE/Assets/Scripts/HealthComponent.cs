@@ -18,7 +18,9 @@ public class HealthComponent : MonoBehaviour
     public event Action<float, float> OnHealthChanged; // (newHealth, maxHealth)
     public event Action<GameObject>   OnDeath;         // passes de aanvaller
     public event Action               OnRevive;
- 
+    public static event Action OnBossDefeated;
+    
+    [SerializeField] private bool isBoss = false;
     void Awake()
     {
         Health  = maxHealth;
@@ -34,7 +36,14 @@ public class HealthComponent : MonoBehaviour
         OnHealthChanged?.Invoke(Health, maxHealth);
  
         if (IsDead)
+        {
+            if (isBoss)
+            {
+                Debug.Log("Boss Defeated");
+                OnBossDefeated?.Invoke();
+            }
             OnDeath?.Invoke(attacker);
+        }
     }
  
     public void Heal(float amount)

@@ -65,7 +65,7 @@ public class MenuButton : MonoBehaviour,
 
         while (t < 1f)
         {
-            t += Time.deltaTime / duration;
+            t += Time.unscaledDeltaTime / duration;
             float ease = Mathf.SmoothStep(0f, 1f, t);
 
             label.color = Color.Lerp(startColor, targetColor, ease);
