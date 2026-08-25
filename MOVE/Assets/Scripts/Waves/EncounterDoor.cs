@@ -21,5 +21,6 @@ public class EncounterDoor : MonoBehaviour, IEncounterGate
     {
         if (_animator != null) _animator.SetTrigger(_unlockedTrigger);
         if (_blockingCollider != null) _blockingCollider.enabled = false;
+        
     }
 }
