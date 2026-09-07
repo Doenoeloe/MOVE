@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class WaveEncounterController : MonoBehaviour
 {
-    [Header("Waves")]
-    [SerializeField] private WaveData[] _waves;
+    [SerializeField] private Transform EncounterTransform;
 
-    [Header("Spawn locaties (in deze arena)")]
-    [SerializeField] private EnemySpawnPoint[] _spawnPoints;
+    [Header("Waves")] [SerializeField] private WaveData[] _waves;
 
-    [Header("Gate")]
-    [SerializeField] private MonoBehaviour _gateBehaviour; // moet IEncounterGate implementeren
+    [Header("Spawn locaties (in deze arena)")] [SerializeField]
+    private EnemySpawnPoint[] _spawnPoints;
+
+    [Header("Gate")] [SerializeField] private MonoBehaviour _gateBehaviour; // moet IEncounterGate implementeren
     private IEncounterGate _gate;
 
     [Header("Events (optioneel, voor UI/audio)")]
-    public System.Action<int> OnWaveStarted;     // wave index
+    public System.Action<int> OnWaveStarted; // wave index
+
     public System.Action OnEncounterCompleted;
 
     private readonly List<HealthComponent> _aliveThisWave = new();
@@ -30,9 +31,10 @@ public class WaveEncounterController : MonoBehaviour
     {
         _gate = _gateBehaviour as IEncounterGate;
         if (_gateBehaviour != null && _gate == null)
-            Debug.LogError($"[WaveEncounterController] {name}: assigned gate behaviour does not implement IEncounterGate.");
+            Debug.LogError(
+                $"[WaveEncounterController] {name}: assigned gate behaviour does not implement IEncounterGate.");
     }
-    
+
     public void BeginEncounter()
     {
         if (_encounterActive || _encounterDone) return;
@@ -110,7 +112,8 @@ public class WaveEncounterController : MonoBehaviour
         var health = go.GetComponent<HealthComponent>();
         if (health == null)
         {
-            Debug.LogError($"[WaveEncounterController] Spawned enemy '{go.name}' has no HealthComponent — can't track death.");
+            Debug.LogError(
+                $"[WaveEncounterController] Spawned enemy '{go.name}' has no HealthComponent — can't track death.");
             return;
         }
 
@@ -149,6 +152,17 @@ public class WaveEncounterController : MonoBehaviour
     {
         _encounterActive = false;
         _encounterDone = true;
+        QuestManager.Instance.CompleteObjective("Vecht!");
+        if (EncounterTransform != null)
+        {
+            QuestManager.Instance.SetObjective(new QuestObjective
+            {
+                id = "reach_boss!",
+                description = "Ga naar de locatie van het laatste gevecht!",
+                worldMarkerTarget = EncounterTransform
+            });
+        }
+
         _gate?.Unlock();
         OnEncounterCompleted?.Invoke();
     }

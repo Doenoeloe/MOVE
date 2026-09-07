@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class WaveEncounterTrigger : MonoBehaviour
+public class BossAreaTrigger : MonoBehaviour
 {
     [SerializeField] private WaveEncounterController _controller;
     [SerializeField] private Transform EncounterTransform;
@@ -16,11 +16,11 @@ public class WaveEncounterTrigger : MonoBehaviour
     {
         if (_triggered) return;
         if (other.GetComponentInParent<CharacterSwitchManager>() == null) return;
-        QuestManager.Instance.CompleteObjective("reach_combat");
+        QuestManager.Instance.CompleteObjective("reach_Boss");
         QuestManager.Instance.SetObjective(new QuestObjective
         {
-            id                = "Vecht!",
-            description       = "Vecht de golven aan vijanden!",
+            id                = "reach_boss",
+            description       = "Vecht de golven aan vijanden! En versla de eind baas.",
             worldMarkerTarget = EncounterTransform
         });
         
